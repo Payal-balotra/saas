@@ -8,6 +8,20 @@
       "when": 1788775965623,
       "tag": "0000_illegal_cassandra_nova",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1788785632130,
+      "tag": "0001_supreme_wendigo",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1788852200101,
+      "tag": "0002_oval_richard_fisk",
+      "breakpoints": true
     }
   ]
 }

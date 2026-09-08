@@ -1,53 +1,47 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { authClient } from "@/src/lib/auth-client";
-import GoogleLogin from "@/src/components/GoogleLogin";
 
-export default function LoginPage() {
-  const router = useRouter();
-
+export default function SignupPage() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
 
-  async function handleLogin(e: React.FormEvent) {
+  async function handleSignup(e: React.FormEvent) {
     e.preventDefault();
 
-    setLoading(true);
-    setError("");
-
-    const { data, error } = await authClient.signIn.email({
+    const { data, error } = await authClient.signUp.email({
+      name,
       email,
       password,
     });
 
-    setLoading(false);
-
     if (error) {
-      setError(error.message);
+      console.log(error);
       return;
     }
 
-    if (data?.twoFactorRedirect) {
-      router.push("/two-factor");
-      return;
-    }
-
-    router.push("/dashboard");
+    console.log("User created:", data);
   }
 
   return (
     <main className="flex min-h-screen items-center justify-center">
       <form
-        onSubmit={handleLogin}
+        onSubmit={handleSignup}
         className="w-full max-w-md space-y-4"
       >
         <h1 className="text-2xl font-bold">
-          Login
+          Create Account
         </h1>
+
+        <input
+          type="text"
+          placeholder="Name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="w-full rounded border p-2"
+        />
 
         <input
           type="email"
@@ -55,7 +49,6 @@ export default function LoginPage() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className="w-full rounded border p-2"
-          required
         />
 
         <input
@@ -64,24 +57,14 @@ export default function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           className="w-full rounded border p-2"
-          required
         />
-
-        {error && (
-          <p className="text-red-500">
-            {error}
-          </p>
-        )}
 
         <button
           type="submit"
-          disabled={loading}
           className="w-full rounded bg-black p-2 text-white"
         >
-          {loading ? "Logging in..." : "Login"}
+          Sign Up
         </button>
-
-        <GoogleLogin />
       </form>
     </main>
   );

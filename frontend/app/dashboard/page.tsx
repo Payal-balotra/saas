@@ -1,6 +1,7 @@
 "use client";
 
-import { authClient } from "@/src/lib/lib/auth-client";
+import { authClient } from "@/src/lib/auth-client";
+
 
 
 export default function DashboardPage() {
